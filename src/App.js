@@ -1,26 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
+import Game from "./Game.js";
 import './App.css';
+import styled, {createGlobalStyle} from "styled-components";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const GlobalStyle = createGlobalStyle`
+        html {
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+        *, *:before, *:after {
+            box-sizing: inherit;
+            scroll-behavior: smooth;
+            margin: 0;
+            padding: 0;
+            outline: none;
+        }
+        body {
+            background-color: #808080;
+            font-family: futura;
+            color: ivory;
+        }
+    `;
+    return (
+        <div className="App">
+            <GlobalStyle />
+            <Game />
+        </div>
+    );
 }
 
 export default App;
