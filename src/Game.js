@@ -6,7 +6,6 @@ import Header from "./components/Header.js";
 import Score from "./components/Score.js";
 import SolutionPanel from "./components/SolutionPanel.js";
 import Options from "./components/Options.js";
-import uniqueKey from "./uniqueKey.js";
 
 const Game = props => {
     const settings = window.localStorage.getItem("hexcolorGame.options");
@@ -24,6 +23,7 @@ const Game = props => {
         guessesRemaining: 2
     })
     useEffect(() => { // runs once
+        console.log("Game->useEffect->newRound()")
         newRound();
     }, []); // empty array prevents this hook from re-running
 
@@ -37,12 +37,11 @@ const Game = props => {
             ...state,
             currentSolution: randomColor,
             currentChoices: generateChoices(randomColor, {
-                
                 minVariance: state.minVariance,
                 maxVariance: state.maxVariance,
                 numChoices: state.numChoices,
-                gameOver: false,
             }),
+            gameOver: false,
         });
     }
     const updateSettings = options => {
@@ -57,16 +56,12 @@ const Game = props => {
     }
     const answerHandler = event => {
         event.stopPropagation();
-        if (! state.guessesRemaining) {
-            setGameState({
-                ...state,
-                gameOver: true,
-            });
-            return;
-        }
+        setGameState({
+            ...state,
+            guessesRemaining: state.guessesRemaining --,
+            gameOver: state.guessesRemaining < 1,
+        });
         const color = event.currentTarget.value;
-        console.log("TCL: color", color)
-        console.log(state.currentSolution)
         if (state.currentSolution === color && ! state.gameOver){
             setGameState({
                 ...state,
@@ -103,9 +98,9 @@ const Game = props => {
                 <Score score={state.score}/>
             </div>
             <section className="swatches" style={swatchBoxStyle} >
-                {state.currentChoices.map(color => {
+                {state.currentChoices.map((color, i) => {
                     return (
-                        <Swatch key={uniqueKey()} solution={state.currentSolution} color={color} onClick={answerHandler}/>
+                        <Swatch key={i} solution={state.currentSolution} color={color} onClick={answerHandler}/>
                     )
                 })}
             </section>

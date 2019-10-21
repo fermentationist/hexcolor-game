@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {hexToRGB} from "../gameUtilities.js";
+import {hexToRGB, getFontColor} from "../gameUtilities.js";
 
 const Swatch = props => {
     const swatchStyle = {
@@ -12,27 +12,18 @@ const Swatch = props => {
         margin: "2vw"
     }
     const onClick = event => {
-        event.preventDefault();
+        console.log("clicked")
+        // event.preventDefault();
         event.stopPropagation();
-        console.log("parent", event.currentTarget)
         revealIdentity(event.currentTarget)
+        console.log("TCL: event.currentTarget", event.currentTarget)
         props.onClick(event);
     }
     const revealIdentity = eventTarget => {
-        console.log(eventTarget.children[0].style.visibility = "visible");// reveal the hex color code for the clicked swatch
+        console.log("this code should reveal the identity")
+        eventTarget.children[0].style.visibility = "visible";// reveal the hex color code for the clicked swatch
+        console.log("TCL: eventTarget.children[0]", eventTarget.children[0])
         getFontColor(props.color);
-    }
-    const getFontColor = (bgHexColor, threshhold = 128) => {
-        const [R, G, B] = hexToRGB(bgHexColor);
-        console.log("TCL: getFontColor -> R, G, B", R, G, B)
-        const adjustedAvgValue = (0.3 * R + 0.59 * G + .11 * B);
-        console.log("TCL: getFontColor -> adjustedAvgValue", adjustedAvgValue)
-        const avgValue = adjustedAvgValue //parseHex.reduce((sum,n) => sum + n)
-            / 3
-        // const largestDeviation = Math.max(...parseHex.map(val => val - avgValue));
-        // console.log("TCL: getFontColor -> largestDeviation", largestDeviation)
-        console.log("TCL: avgValue", avgValue)
-        return adjustedAvgValue >= threshhold ? "#080808" : "#F8F8F8";
     }
     const StyledButton = styled.button`
         background-color: #${props.color};
