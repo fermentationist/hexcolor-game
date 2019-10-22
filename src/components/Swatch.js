@@ -3,18 +3,11 @@ import styled from "styled-components";
 import {hexToRGB, getFontColor} from "../gameUtilities.js";
 
 const Swatch = props => {
-    const swatchStyle = {
-        backgroundColor: `#${props.color}`,
-        height: "10vw",
-        width: "10vw",
-        border: "1px solid lightgray",
-        borderRadius: "13px",
-        margin: "2vw"
-    }
     const onClick = event => {
         console.log("clicked")
         // event.preventDefault();
         event.stopPropagation();
+<<<<<<< HEAD
         revealIdentity(event.currentTarget)
         console.log("TCL: event.currentTarget", event.currentTarget)
         props.onClick(event);
@@ -24,6 +17,14 @@ const Swatch = props => {
         eventTarget.children[0].style.visibility = "visible";// reveal the hex color code for the clicked swatch
         console.log("TCL: eventTarget.children[0]", eventTarget.children[0])
         getFontColor(props.color);
+=======
+        revealIdentity(event.currentTarget);
+        props.clickHandler(event);
+    }
+    const revealIdentity = eventTarget => {
+        console.log("revealIdentity called.");
+        eventTarget.children[0].style.visibility = "visible";// reveal the hex color code for the clicked swatch
+>>>>>>> tmp
     }
     const StyledButton = styled.button`
         background-color: #${props.color};

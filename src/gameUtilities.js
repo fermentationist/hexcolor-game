@@ -12,10 +12,8 @@ export const randomHexColor = () => {
 }
 export const getFontColor = (bgHexColor, threshhold = 80) => {
     const [R, G, B] = hexToRGB(bgHexColor);
-    const adjustedAvgValue = (0.3 * R + 0.59 * G + .11 * B);
-    const avgValue = adjustedAvgValue //parseHex.reduce((sum,n) => sum + n)
-        / 3
-    return adjustedAvgValue >= threshhold ? "#080808" : "#F8F8F8";
+    const weightedValue = (0.3 * R + 0.59 * G + .11 * B);
+    return weightedValue >= threshhold ? "#080808" : "#F8F8F8";
 }
 export const hexToRGB = hexColor => {
     return hexColor.match(/.{1,2}/g).map(hex => parseInt(hex, 16));
