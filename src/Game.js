@@ -6,77 +6,102 @@ import Header from "./components/Header.js";
 import Score from "./components/Score.js";
 import SolutionPanel from "./components/SolutionPanel.js";
 import Options from "./components/Options.js";
-import uniqueKey from "./uniqueKey.js";
 
 const Game = props => {
-    const settings = window.localStorage.getItem("hexcolorGame.options");
+    const settings = localStorage.getItem("hexcolorGame.options");
     console.log("TCL: settings", settings)
-    const {minVariance, maxVariance, numChoices} = settings ? JSON.parse(settings) : {};
-    console.log("TCL: minVariance, maxVariance, numChoices", minVariance, maxVariance, numChoices)
-    const [state, setGameState] = useState({
+    const {minVariance, maxVariance, numChoices, score} = settings ? JSON.parse(settings) : {};
+    console.log("TCL: minVariance, maxVariance, numChoices, score", minVariance, maxVariance, numChoices, score);
+
+    let guessesRemaining = 2;
+    let gameOver = false;
+    let roundScore = 0;
+
+    const [state, setState] = useState({
         currentSolution: "",
-        score: 0,
+        score: score || 0,
         currentChoices: [],
         numChoices: numChoices || 4,
         minVariance: minVariance || 10,
         maxVariance: maxVariance || 100,
-        gameOver: false,
-        guessesRemaining: 2
+        // gameOver: false,
+        // guessesRemaining: 2
     })
     useEffect(() => { // runs once
         newRound();
+        
     }, []); // empty array prevents this hook from re-running
 
-    useEffect(() => { // runs every change?
-        console.log("state:", state)
-    });
-    const newRound = () => {
-        const randomColor = randomHexColor();
-
-        setGameState({
+    // useEffect(() => { // runs every change?
+    //     console.log("state:", state)
+    // });
+    const clear = () => {
+        console.log("roundScore:", roundScore);
+        setState({
             ...state,
+            currentSolution: "",
+            currentChoices: [],
+            score: roundScore,
+        });
+        
+    }
+    const newRound = () => {
+        clear();
+        console.log("TCL: newRound -> state", state)
+        const randomColor = randomHexColor();
+        const saved = JSON.parse(localStorage.getItem("hexcolorGame.options"));
+        localStorage.setItem("hexcolorGame.options", JSON.stringify({
+            ...saved,
+            score: state.score + roundScore,
+        }));
+        setState({
+            ...state,
+            score: state.score + roundScore,
             currentSolution: randomColor,
             currentChoices: generateChoices(randomColor, {
-                
                 minVariance: state.minVariance,
                 maxVariance: state.maxVariance,
                 numChoices: state.numChoices,
-                gameOver: false,
             }),
         });
+        
+        guessesRemaining = 2;
+        gameOver = false;
+        roundScore = 0;
     }
     const updateSettings = options => {
-        console.log("updating settings...")
-        setGameState({
+        console.log("updating settings...", options)
+        setState({
             ...state,
             ...options
         })
-        window.localStorage.setItem("hexcolorGame.options", JSON.stringify({
+        localStorage.setItem("hexcolorGame.options", JSON.stringify({
             ...options
         }))
     }
     const answerHandler = event => {
         event.stopPropagation();
-        if (! state.guessesRemaining) {
-            setGameState({
-                ...state,
-                gameOver: true,
-            });
+        event.preventDefault();
+        if (! guessesRemaining) {
+            gameOver = true;
+            console.log("game over")
             return;
         }
         const color = event.currentTarget.value;
-        console.log("TCL: color", color)
         console.log(state.currentSolution)
-        if (state.currentSolution === color && ! state.gameOver){
-            setGameState({
-                ...state,
-                score: state.score + state.guessesRemaining,
-                gameOver: true
-            })
-            console.log("winner winner chicken dinner")
-            console.log(`${state.guessesRemaining} points!`)
+        if (state.currentSolution === color && ! gameOver){
+            gameOver = true;
+            // setState({
+            //     ...state,
+            //     score: state.score + guessesRemaining,
+            // })
+            roundScore += guessesRemaining;
+            console.log("winner winner chicken dinner");
+            console.log(`${guessesRemaining} points!`);
+            guessesRemaining = 0;
         } else {
             console.log("WRONG!");
+            guessesRemaining --;
             return;
         }
     }
@@ -103,9 +128,10 @@ const Game = props => {
                 <Score score={state.score}/>
             </div>
             <section className="swatches" style={swatchBoxStyle} >
-                {state.currentChoices.map(color => {
+                {state.currentChoices.map((color, index) => {
+                    console.log("rendering swatches...")
                     return (
-                        <Swatch key={uniqueKey()} solution={state.currentSolution} color={color} onClick={answerHandler}/>
+                        <Swatch key={index} solution={state.currentSolution} color={color} clickHandler={answerHandler}/>
                     )
                 })}
             </section>
