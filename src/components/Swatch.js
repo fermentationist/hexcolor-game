@@ -7,24 +7,12 @@ const Swatch = props => {
         console.log("clicked")
         // event.preventDefault();
         event.stopPropagation();
-<<<<<<< HEAD
-        revealIdentity(event.currentTarget)
-        console.log("TCL: event.currentTarget", event.currentTarget)
-        props.onClick(event);
-    }
-    const revealIdentity = eventTarget => {
-        console.log("this code should reveal the identity")
-        eventTarget.children[0].style.visibility = "visible";// reveal the hex color code for the clicked swatch
-        console.log("TCL: eventTarget.children[0]", eventTarget.children[0])
-        getFontColor(props.color);
-=======
         revealIdentity(event.currentTarget);
         props.clickHandler(event);
     }
     const revealIdentity = eventTarget => {
         console.log("revealIdentity called.");
         eventTarget.children[0].style.visibility = "visible";// reveal the hex color code for the clicked swatch
->>>>>>> tmp
     }
     const StyledButton = styled.button`
         background-color: #${props.color};
