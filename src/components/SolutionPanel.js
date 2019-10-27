@@ -10,7 +10,7 @@ const SolutionPanel = props => {
         fontFamily: "Courier New",
         fontSize: "3em",
         padding: "0.5em",
-        margin: "2vw",
+        margin: "0",
         boxShadow: "var(--inset-shadow)",
     }
     return (

@@ -1,7 +1,11 @@
 import React, {useState, useEffect, useRef} from "react";
 import Slider from "./Slider.js";
-import ReloadButton from "./ReloadButton.js";
+import Button from "./ReloadButton.js";
+import withTooltip from "./withTooltip.js";
+import styled from "styled-components";
 
+const ReloadButton = withTooltip(Button);
+const SliderWithTooltip = withTooltip(Slider);
 const Options = props => {
     const [state, setState] = useState({
         minVariance: 20,
@@ -29,18 +33,23 @@ const Options = props => {
         alignText: "center",
         fontSize: "12px"
     };
-    const sliderOptionStyle = {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        margin: "0",
-        padding: "0",
-    };
+    const StyledOptionSlider = styled.div`
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 1.5em;
+        padding: 0;
+        h3{
+            padding: 1.5em;
+            margin-bottom: 1.5em;
+        }
+    `;
     const settingsStyle = {
         display: "flex",
         flexDirection: "column",
-        alignItems: "center"
+        alignItems: "center",
+        justifyContent: "flex-start",
     }
     const minChangeHandler = event => {
         event.stopPropagation();
@@ -62,17 +71,31 @@ const Options = props => {
     return (
         <section className="settings" style={settingsStyle}>
             <div className="next-button">  
-                <ReloadButton onClick={props.newRound}/>
+                <ReloadButton tooltip="next round" onClick={props.newRound}/>
             </div>
             <div className="options" style={optionsStyle}>
-                <div className="min-variance-option" style={sliderOptionStyle}>
-                    <Slider min="5" max="220" step="1" defaultValue={state.minVarInitial} onMouseUp={minChangeHandler} ref={minRef}/>
+                <StyledOptionSlider className="min-variance-option">
+                    <SliderWithTooltip 
+                        min="5" 
+                        max="220" 
+                        step="1" 
+                        tooltip={state.minVariance}
+                        defaultValue={state.minVarInitial} 
+                        onMouseUp={minChangeHandler} 
+                        ref={minRef}/>
                     <h3>minimum variance</h3>
-                </div>
-                <div className="max-variance-option" style={sliderOptionStyle}>
-                    <Slider min="5" max="220" step="1" defaultValue={state.maxVariance} onMouseUp={maxChangeHandler} ref={maxRef}/>
+                </StyledOptionSlider>
+                <StyledOptionSlider className="max-variance-option">
+                    <SliderWithTooltip 
+                        min="5" 
+                        max="220" 
+                        step="1" 
+                        tooltip={state.maxVariance}
+                        defaultValue={state.maxVariance} 
+                        onMouseUp={maxChangeHandler} 
+                        ref={maxRef}/>
                     <h3>maximum variance</h3>
-                </div>
+                </StyledOptionSlider>
             </div>
         </section>
     );

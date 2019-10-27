@@ -18,9 +18,11 @@ const Swatch = props => {
         background-color: #${props.color};
         height: 10vw;
         width: 10vw;
+        min-height: 96px;
+        min-width: 96px;
         border: 2px solid lightgray;
         border-radius: 100%;
-        margin: 2vw;
+        margin: 0 2vw;
         text-decoration: line-through;
         text-decoration-line: ${props.color !== props.solution ? "line-through" : "none"};
         text-decoration-color: red;
@@ -33,10 +35,10 @@ const Swatch = props => {
     `;
     const StyledSpan = styled.span`
         font-family: "Courier New";
-        font-size: 3em;
+        font-size: calc((2.5vw + 2.5vh)/2);
         font-weight: 600;
         color: ${getFontColor(props.color)};
-        filter: invert(0.1);
+        /* filter: invert(0.1); */
         visibility: hidden; /* hides the hex color value for the swatch */
         border: ${props.color === props.solution ? "4px dashed green" : "none"};/* outlines the correct answer */
     `;

@@ -24,7 +24,6 @@ function App() {
             font-size: 10px;
             color: #444;
         }
-        
     `;
     return (
         <div className="App">

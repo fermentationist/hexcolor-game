@@ -114,7 +114,8 @@ const Game = props => {
     }
     const mainStyle = {
         display: "grid",
-        gridTemplateRows: "auto",
+        gridTemplateRows: "1fr 1fr 1fr 1fr",
+        height: "100vh",
     }
     const boardStyle = {
         display: "flex",
