@@ -31,14 +31,13 @@ const Options = props => {
         alignItems: "center",
         justifyContent: "center",
         alignText: "center",
-        fontSize: "12px"
+        fontSize: "10px"
     };
     const StyledOptionSlider = styled.div`
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        margin-top: 1.5em;
         padding: 0;
         h3{
             padding: 1.5em;
@@ -46,6 +45,7 @@ const Options = props => {
         }
     `;
     const settingsStyle = {
+        width: "100vw",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -70,7 +70,7 @@ const Options = props => {
     }
     return (
         <section className="settings" style={settingsStyle}>
-            <div className="next-button">  
+            <div className="next-button" style={{height: "auto"}}>  
                 <ReloadButton tooltip="next round" onClick={props.newRound}/>
             </div>
             <div className="options" style={optionsStyle}>

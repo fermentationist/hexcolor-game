@@ -3,13 +3,13 @@ import React from "react";
 const Header = props => {
     const headerStyle = {
         width: "100vw",
-        height: "33vh",
+        height: "25vh",
         display: "flex",
         flexDirection: "column",
         alignText: "center",
         justifyContent: "center",
         alignItems: "center",
-        fontSize: "3em"
+        fontSize: "calc((3vw + 3vh)/2)",
 
     }
     return (

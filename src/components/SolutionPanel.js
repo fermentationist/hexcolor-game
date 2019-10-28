@@ -1,22 +1,26 @@
 import React from "react";
+import styled from "styled-components";
+import withTooltip from "./withTooltip.js";
 
 const SolutionPanel = props => {
-    const solutionStyle = {
-        minWidth: "auto",
-        width: "auto",
-        backgroundColor: "lightgray",
-        borderRadius: "12px",
-        border: "2px ridge darkgray",
-        fontFamily: "Courier New",
-        fontSize: "3em",
-        padding: "0.5em",
-        margin: "0",
-        boxShadow: "var(--inset-shadow)",
-    }
+    const StyledSection = styled.section`
+        min-width: auto;
+        width: auto;
+        height: auto;
+        background-color: lightgray;
+        border-radius: 12px;
+        border: 2px ridge darkgray;
+        font-family: "Courier New";
+        font-size: calc((4vw + 4vh)/2);
+        padding: 0.5em;
+        margin: 0.5em;
+        box-shadow: var(--inset-shadow);
+    `;
+    const Solution = withTooltip(StyledSection)
     return (
-        <section className="solution" style={solutionStyle}>
+        <Solution className="solution" tooltip="This six-digit hexidecimal code represents an RGB color">
             <h1>#{props.solution.toUpperCase()}</h1>
-        </section>
+        </Solution>
     );
 }
 

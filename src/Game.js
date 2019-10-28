@@ -108,20 +108,34 @@ const Game = props => {
         }
     }
     const swatchBoxStyle = {
+        width: "100vw",
         display: "flex",
         flexDirection: "row",
-        justifyContent: "center",
+        justifyContent: "space-between",
+        alignItems: "space-between",
     }
+    const StyledSwatchSection = styled.section`
+        width: 100vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        @media (max-width: 540px) {
+            justify-content: space-around;
+        }
+    `;
+
     const mainStyle = {
         display: "grid",
-        gridTemplateRows: "1fr 1fr 1fr 1fr",
+        gridTemplateRows: "auto",
         height: "100vh",
     }
     const boardStyle = {
+        width: "100vw",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        marginBottom: "2vh",
     }
     return (
         <main style={mainStyle}>
@@ -130,14 +144,14 @@ const Game = props => {
                 <SolutionPanel solution={state.currentSolution}/>
                 <Score score={state.score}/>
             </div>
-            <section className="swatches" style={swatchBoxStyle} >
+            <StyledSwatchSection className="swatches" >
                 {state.currentChoices.map((color, index) => {
                     console.log("rendering swatches...")
                     return (
                         <Swatch key={index} solution={state.currentSolution} color={color} clickHandler={answerHandler}/>
                     )
                 })}
-            </section>
+            </StyledSwatchSection>
             <Options updateSettings={updateSettings} newRound={newRound}/>
         </main>
     );

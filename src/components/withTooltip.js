@@ -4,7 +4,7 @@ import styled from "styled-components";
 const withTooltip = TargetComponent => {
     return React.forwardRef((props, forwardedRef) => {
         const tooltip = props.tooltip || null;
-        console.log("TCL: props", props)
+        // console.log("TCL: props", props)
         const backgroundColor = props.backgroundColor || "darkgray";
         const fontColor = props.fontColor || "#F8F8F8";
         const fontSize = props.fontSize || "1.5em";
@@ -13,19 +13,17 @@ const withTooltip = TargetComponent => {
         const Tooltip = styled.div`
             position: relative;
             pointer-events: none; /* deactivate pointer-effects so containing div doesn't activate tooltip */
+            width: auto;
+            height: min-content;
             padding-top: 0.35em;
-            margin-top: 5vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             &:before, &:after {
                 visibility: hidden;
-                /* filter: blur(0.5em); */
+                filter: blur(0.25em);
                 margin: 0;
                 padding: 0;
-            }
-            #track {
-                background-color: lightgray;
             }
             &:before {
                 position: relative;
@@ -64,7 +62,7 @@ const withTooltip = TargetComponent => {
             @media (hover:hover){
                 &, &:hover:before, &:hover:after {
                     visibility: visible;
-                    /* filter: blur(0); */
+                    filter: blur(0);
                     transition: 333ms;
                 }
             }
