@@ -35,12 +35,12 @@ export const generateChoice = (hexColor, {maxVariance, minVariance}) => {
     return [getCloseNumber(R, {maxVariance, minVariance}), getCloseNumber(G, {maxVariance, minVariance}), getCloseNumber(B, {maxVariance, minVariance})].join("");
 }
 
-export const generateChoices = (solution, {numberOfChoices = 3, maxVariance, minVariance}) => {
-    const choices = Array(numberOfChoices).fill("").map(() => generateChoice(solution, {maxVariance, minVariance}));
+export const generateChoices = (solution, {numChoices=3, maxVariance, minVariance}) => {
+    const choices = Array(numChoices).fill("").map(() => generateChoice(solution, {maxVariance, minVariance}));
     
-    const randomSlot = Math.floor(Math.random() * numberOfChoices);
+    const randomSlot = Math.floor(Math.random() * numChoices);
     
-    choices.splice(randomSlot, 0, solution);
+    const output = choices.splice(randomSlot, 0, solution);
     
-    return choices;
+    return output;
 }

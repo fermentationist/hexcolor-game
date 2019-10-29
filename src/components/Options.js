@@ -57,7 +57,7 @@ const Options = props => {
         setState({
             ...state,
             minVariance: parseInt(slider.value),
-            maxVariance: Math.max(slider.value, state.maxVariance) + 5,
+            maxVariance: Math.max(parseInt(slider.value) + 5, state.maxVariance),
                 });
     }
     const maxChangeHandler = event => {
@@ -88,7 +88,7 @@ const Options = props => {
                 <StyledOptionSlider className="max-variance-option">
                     <SliderWithTooltip 
                         min="5" 
-                        max="220" 
+                        max="225" 
                         step="1" 
                         tooltip={state.maxVariance}
                         defaultValue={state.maxVariance} 
