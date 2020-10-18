@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import {hexToRGB, getFontColor} from "../gameUtilities.js";
+import withTooltip from "./withTooltip.js";
 
 const Swatch = props => {
     const onClick = event => {
@@ -18,8 +19,8 @@ const Swatch = props => {
         background-color: #${props.color};
         height: 10vw;
         width: 10vw;
-        min-height: 96px;
-        min-width: 96px;
+        min-height: 69px;
+        min-width: 69px;
         border: 2px solid lightgray;
         border-radius: 100%;
         margin: 0 2vw;
@@ -35,17 +36,18 @@ const Swatch = props => {
     `;
     const StyledSpan = styled.span`
         font-family: "Courier New";
-        font-size: calc((2.5vw + 2.5vh)/2);
+        font-size: calc((2.25vw + 2.25vh)/2);
         font-weight: 600;
         color: ${getFontColor(props.color)};
         /* filter: invert(0.1); */
         visibility: hidden; /* hides the hex color value for the swatch */
         border: ${props.color === props.solution ? "4px dashed green" : "none"};/* outlines the correct answer */
     `;
+    const ButtonWithTooltip = withTooltip(StyledButton);
     return (
-        <StyledButton className={`swatch-${props.color}`} value={props.color} onClick={onClick}>
+        <ButtonWithTooltip tooltip="click to guess..." className={`swatch-${props.color}`} value={props.color} onClick={onClick}>
             <StyledSpan>#{props.color.toUpperCase()}</StyledSpan>
-        </StyledButton>
+        </ButtonWithTooltip>
     );
 }
 

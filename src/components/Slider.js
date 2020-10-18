@@ -26,6 +26,39 @@ const Slider = React.forwardRef((props, ref) => {
             background-color: #808080;
             box-shadow: var(--inset-shadow);
         }
+        &::-webkit-slider-thumb {
+            appearance: none;
+		    margin-top: .5;
+            /* box-sizing: border-box; */
+            border: none;
+            width: calc((2vw + 2vh) / 2); 
+            height: calc((1vw + 1vh) / 2); 
+            /* border-radius: 50%; */
+            background: #080808;
+        }
+        &::-moz-range-thumb { 
+            appearance: none;
+            /* box-sizing: border-box; */
+            border: none;
+            width: calc((2vw + 2vh) / 2); 
+            height: calc((1vw + 1vh) / 2); 
+            /* border-radius: 50%; */
+            background: #080808;
+
+        }
+        &::-ms-thumb {
+            margin-top: 0;
+            appearance: none;
+            /* box-sizing: border-box; */
+            border: none;
+            width: calc((2vw + 2vh) / 2); 
+            height: calc((1vw + 1vh) / 2); 
+            /* border-radius: 50%; */
+            background: #080808;
+        }
+	
+	    /* &::-ms-tooltip { display: none; } */
+}
         &:hover {
             opacity: 1;
             transition: 666ms;
